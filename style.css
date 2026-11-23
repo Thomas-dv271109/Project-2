@@ -1,0 +1,194 @@
+/* ===== Variabelen ===== */
+:root {
+  --kleur-hoofd: #1f4e79;
+  --kleur-licht: #eef3f8;
+  --kleur-tekst: #1c1c1c;
+  --kleur-rand: #333;
+  --ruimte: 16px;
+}
+
+/* ===== Basis (tag-selectors) ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: var(--kleur-tekst);
+  background: white;
+}
+
+h1, h2, h3 { margin-top: 0; }
+a { color: var(--kleur-hoofd); }
+
+/* ===== Navbar (flexbox + sticky) ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 2px solid var(--kleur-rand);
+  padding: var(--ruimte);
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* child-of selector: alleen links die direct in nav staan */
+  nav > a {
+    position: relative;
+    padding: 8px 22px;
+    border: 2px solid var(--kleur-rand);
+    text-decoration: none;
+    color: var(--kleur-tekst);
+
+    /* pseudo-element: streepje onder de link bij hover */
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 4px;
+      background: var(--kleur-hoofd);
+      transition: width 0.25s;
+    }
+    &:hover::after { width: 100%; }
+    &:hover { background: var(--kleur-licht); }
+  }
+
+  nav > a.actief { background: var(--kleur-hoofd); color: white; }
+
+  /* class-selector: het ronde logo */
+  nav > a.logo {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    background: var(--kleur-licht);
+  }
+  nav > a.logo::after { display: none; }
+}
+
+/* ===== Main ===== */
+#hoofd {
+  max-width: 1000px;
+  margin: var(--ruimte) auto;
+  padding: 0 var(--ruimte);
+}
+
+/* Bovenste blok: tekst links, foto rechts (flexbox) */
+.intro {
+  display: flex;
+  gap: 24px;
+  border: 2px solid var(--kleur-rand);
+  padding: var(--ruimte);
+
+  .tekst {
+    flex: 1;
+    border: 2px dashed var(--kleur-rand);
+    padding: var(--ruimte);
+  }
+  img {
+    flex: 1;
+    width: 50%;
+    max-height: 420px;
+    object-fit: cover;
+    border: 2px solid var(--kleur-rand);
+  }
+}
+
+/* Kaarten (grid) */
+.kaarten {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ruimte);
+  margin-top: var(--ruimte);
+}
+
+/* child-of selector: direct kind van .kaarten */
+.kaarten > article {
+  border: 2px dashed var(--kleur-rand);
+  padding: var(--ruimte);
+  text-align: center;
+
+  .icoon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--kleur-rand);
+    background: var(--kleur-licht);
+    font-weight: bold;
+  }
+  &:hover { background: var(--kleur-licht); }
+}
+
+/* ===== Tabel ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--ruimte) 0;
+
+  th, td { border: 1px solid var(--kleur-rand); padding: 10px; text-align: left; }
+  th { background: var(--kleur-hoofd); color: white; }
+  tr:nth-child(even) td { background: var(--kleur-licht); }
+}
+
+/* ===== Formulier ===== */
+form {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  label { font-weight: bold; }
+  input, select, textarea {
+    padding: 10px;
+    font: inherit;
+    border: 2px solid var(--kleur-rand);
+  }
+  button {
+    padding: 12px;
+    font: inherit;
+    font-weight: bold;
+    color: white;
+    background: var(--kleur-hoofd);
+    border: none;
+    cursor: pointer;
+    &:hover { background: #163a5c; }
+  }
+}
+
+/* ===== Footer (flexbox) ===== */
+footer {
+  max-width: 1000px;
+  margin: var(--ruimte) auto;
+  padding: var(--ruimte);
+  border: 2px solid var(--kleur-rand);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  ul { list-style: none; margin: 0; padding: 0; }
+  p { margin: 0; }
+}
+
+/* ===== Media query: kleine schermen ===== */
+@media (max-width: 700px) {
+  header nav { flex-wrap: wrap; }
+  .intro { flex-direction: column; }
+  .intro img { width: 100%; }
+  .kaarten { grid-template-columns: 1fr; }
+  footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
